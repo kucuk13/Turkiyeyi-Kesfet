@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Türkiyeyi Keşfet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-9" />
+    <link rel="shortcut icon" href="/images/logo_icon.png">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+</head>
+
+<body>
+	<div class="menu">
+		<div class="header">
+			<img src = "/images/logo.png" width="250" height="80">
+			<div class="header-right">
+				<button class="button button_menu" onclick="window.location.href='/<%=user%>/search'"><img src="/images/find.png" width="15px" height="15px"> Ara</button>
+				<button class="button button_menu" onclick="window.location.href='/<%=user%>/page'"><img src="/images/page.png" width="15px" height="15px"> Sayfam</button>
+				<button class="button button_menu" onclick="window.location.href='/<%=user%>/settings'"><img src="/images/ayarlar.png" width="15px" height="15px"> Ayarlar</button>
+				<button class="button button_menu" onclick="window.location.href='/'"><img src="/images/x.png" width="15px" height="15px"> Çıkış</button>
+			</div>
+		</div>
+	</div>
+	<div class="tual">
+		<div class="sol_menu">
+			<img src="<%=users[id].picture%>" style="border-radius: 50%;" width="240" height="240">
+			<h2><%=users[id].name%> <%=users[id].surname%></h2>
+			<% if (user != id) { %>
+				<form action="/<%=user%>/<%=id%>/follow" method="POST">
+					<input type="hidden" name="id" value="<%=user%>">
+					<input type="hidden" name="follow_id" value="<%=id%>">
+					<button type="submit" class="button button_icerik"><img src="/images/friend.png" width="15px" height="15px"> Takip Et</button>
+				</form>
+			<% } %>
+			<ul id="myMenu">
+				<li><a href="/<%=user%>/<%=users[id].id%>/posts">Paylaşımlar</a></li>
+				<li><a href="/<%=user%>/<%=users[id].id%>/about"><b style="color: red">Hakkında</b></a></li>
+				<li><a href="/<%=user%>/<%=users[id].id%>/followers">Takipçileri</a></li>
+				<li><a href="/<%=user%>/<%=users[id].id%>/following">Takip Ettikleri</a></li>
+				<li><a href="/<%=user%>/<%=users[id].id%>/likes">Beğendikleri</a></li>
+			</ul>
+		</div>
+		<div class="sag_icerik" style="font-size:150%; font-family:segoe ui;">
+			<b> Ad: </b> <%=users[id].name%> <br>
+			<b> Soyad: </b> <%=users[id].surname%> <br>
+			<b> Yaş: </b> <%=2019 - users[id].birth.substring(0, 4)%> <br>
+			<b> Ülke: </b> <%=users[id].country%> <br>
+			<b> Şehir: </b> <%=users[id].city%> <br>
+			<b> Cinsiyet: </b> <%=users[id].gender%> <br><br>
+			<%=users[id].about%>
+			<div style="clear: both"></div>
+		</div>
+	</div>
+</body>
+</html>

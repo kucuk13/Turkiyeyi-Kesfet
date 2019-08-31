@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Türkiyeyi Keşfet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-9">
+    <link rel="shortcut icon" href="/images/logo_icon.png">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+	<script src="//geodata.solutions/includes/countrystatecity.js"></script>
+</head>
+
+<body>
+	<div class="menu">
+		<div class="header">
+			<img src = "/images/logo.png" width="250" height="80">
+			<div class="header-right">
+				<button class="button button_menu" onclick="window.location.href='/<%=users[user].id%>/search'"><img src="/images/find.png" width="15px" height="15px"> Ara</button>
+				<button class="button button_menu" onclick="window.location.href='/<%=users[user].id%>/page'"><img src="/images/page.png" width="15px" height="15px"> Sayfam</button>
+				<button class="button button_icerik" onclick="window.location.href='/<%=users[user].id%>/settings'"><img src="/images/ayarlar.png" width="15px" height="15px"> Ayarlar</button>
+				<button class="button button_menu" onclick="window.location.href='/'"><img src="/images/x.png" width="15px" height="15px"> Çıkış</button>
+			</div>
+		</div>
+	</div>
+<div class="ust">
+	<form class="modal-content animate" action="/<%=user%>/update" method="POST">
+		<div class="container">
+			<label for="name">Adınızı giriniz:</label>
+			<input type="text" name="name" value="<%=users[user].name%>" required>
+
+			<label for="surname">Soyadınızı giriniz:</label>
+			<input type="text" name="surname" value="<%=users[user].surname%>" required>
+
+			<label for="lives">Ülke:</label>
+			<select name="country" class="countries" id="countryId" required>
+				<option value="<%=users[user].country%>"><%=users[user].country%></option>
+			</select>
+			
+			<label for="city">Şehir:</label>
+			<select name="city" class="states" id="stateId" required>
+				<option value="<%=users[user].city%>"><%=users[user].city%></option>
+			</select>
+			
+			<label for="picture">Resim:</label>
+			<input type="file" name="picture" value="<%=users[user].picture%>">
+	  
+			<label for="about">Duvar yazısı:</label>
+			<textarea name="about" rows="10" cols="30"><%=users[user].about%></textarea>
+
+			<label for="birthdate">Doğum Tarihi:</label>
+			<input type="date" name="birth" value="<%=users[user].birth%>" required>
+
+			<label for="gender">Cinsiyet:</label> <br>
+			<input type="radio" name="gender" value="Erkek"> Erkek <br>
+			<input type="radio" name="gender" value="Kız"> Kız <br> <br>
+
+			<label for="email">Mail:</label> 
+			<input type="email" name="mail" placeholder="xxx@gmail.com" value="<%=users[user].mail%>" required>
+
+			<label for="psw">Şifre:</label>
+			<input type="password" name="psw" placeholder="****">
+
+			<label for="psw-repeat">Tekrar Şifreyi Giriniz:</label>
+			<input type="password" placeholder="****">
+			
+			<input type="hidden" name="id" value="<%=users[user].id%>">
+						
+			<div class="clearfix, mid">
+				<button type="submit" class="signupbtn">Güncelle</button>
+			</div>
+		</div>
+	</form>
+
+</div>
+</div>
+</body>
+</html>

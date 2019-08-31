@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Türkiyeyi Keşfet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-9">
+    <link rel="shortcut icon" href="/images/logo_icon.png">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+	<style>
+		body {
+			background-image:url(/images/arka-plan.png);
+			background-repeat:no-repeat;
+			background-size:cover;
+		}
+	</style>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+	<script src="//geodata.solutions/includes/countrystatecity.js"></script>
+</head>
+
+<body>
+
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Giriş Yap</button>
+
+<div id="id01" class="modal">
+	<form class="modal-content animate" action="/login" method="POST">
+		<div class="imgcontainer">
+			<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+		</div>
+		<div class="container">
+			<label for="mail">Mail Adresi:</label>
+			<input type="email" name="mail" placeholder="xxx@gmail.com">
+			
+			<label for="psw">Şifreniz:</label>
+			<input type="password" name="psw" placeholder="**** ">
+			
+			<div class="mid">
+				<button type="submit">Giriş</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Üye Ol</button>
+
+<div id="id02" class="modal">
+	<form class="modal-content animate" action="/signup" method="POST">
+		<div class="imgcontainer">
+			<span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+		</div>
+		<div class="container">
+			<label for="name">Adınızı giriniz:</label>
+			<input type="text" name="name" required>
+
+			<label for="surname">Soyadınızı giriniz:</label>
+			<input type="text" name="surname" required>
+			
+			<label for="country">Ülke:</label>
+			<select name="country" class="countries" id="countryId" required>
+				<option value="">Ülke seçiniz</option>
+			</select>
+			
+			<label for="city">Şehir:</label>
+			<select name="city" class="states" id="stateId" required>
+				<option value="">İl seçiniz</option>
+			</select>
+			
+			<label for="picture">Resim:</label>
+			<input type="file" name="picture">
+	  
+			<label for="about">Duvar yazısı:</label>
+			<textarea name="about" rows="10" cols="30">Merhaba. Açıklamalar...</textarea>
+
+			<label for="birthdate">Doğum Tarihi:</label>
+			<input type="date" name="birth" required>
+
+			<label for="gender">Cinsiyet:</label> <br>
+			<input type="radio" name="gender" value="Erkek"> Erkek <br>
+			<input type="radio" name="gender" value="Kız"> Kız <br> <br>
+
+			<label for="email">Mail:</label> 
+			<input type="email" name="mail" placeholder="xxx@gmail.com" required>
+
+			<label for="psw">Şifre:</label>
+			<input type="password" name="psw" placeholder="****" required>
+
+			<label for="psw-repeat">Tekrar Şifreyi Giriniz:</label>
+			<input type="password" name="pswr" placeholder="****" required>
+			
+			<input type="hidden" name="id" value="<%=users.length%>">
+			<input type="hidden" name="friends" value="0">
+			
+			<div class="clearfix, mid">
+				<button type="submit" class="signupbtn">Üye Ol</button>
+			</div>
+		</div>
+	</form>
+</div>
+</body>
+</html>

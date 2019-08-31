@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Türkiyeyi Keşfet</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-9">
+    <link rel="shortcut icon" href="/images/logo_icon.png">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+</head>
+
+<body>
+	<div class="menu">
+		<div class="header">
+			<img src = "/images/logo.png" width="250" height="80">
+			<div class="header-right">
+				<button class="button button_menu" onclick="window.location.href='/<%=users[user].id%>/search'"><img src="/images/find.png" width="15px" height="15px"> Ara</button>
+				<button class="button button_menu" onclick="window.location.href='/<%=users[user].id%>/page'"><img src="/images/page.png" width="15px" height="15px"> Sayfam</button>
+				<button class="button button_menu" onclick="window.location.href='/<%=users[user].id%>/settings'"><img src="/images/ayarlar.png" width="15px" height="15px"> Ayarlar</button>
+				<button class="button button_menu" onclick="window.location.href='/'"><img src="/images/x.png" width="15px" height="15px"> Çıkış</button>
+			</div>
+		</div>
+	</div>
+	<div class="tual">
+		<div class="sol_menu">
+			<img src="<%=places[id].picture%>" style="border-radius: 50%;" width="240" height="240">
+			<h2><%=places[id].name%></h2>
+			<form action="/<%=user%>/<%=id%>/like" method="POST">
+				<input type="hidden" name="user" value="<%=user%>">
+				<input type="hidden" name="place" value="<%=id%>">
+				<button type="submit" class="button button_icerik"><img src="/images/kalp.png" width="15px" height="15px"> Beğen</button>
+			</form>
+			<ul id="myMenu">
+				<li><a href="/<%=user%>/<%=places[id].id%>/comments"><b style="color: red">Yorumlar</b></a></li>
+				<li><a href="/<%=user%>/<%=places[id].id%>/information">Bilgiler</a></li>
+				<li><a href="/<%=user%>/<%=places[id].id%>/photos">Fotoğraflar</a></li>
+				<li><a href="/<%=user%>/<%=places[id].id%>/videos">Videolar</a></li>
+				<li><a href="/<%=user%>/<%=places[id].id%>/fans">Beğenenler</a></li>
+			</ul>
+		</div>
+		<div class="sag_icerik" style="font-size:125%; font-family:arial;">
+			<div class="mid">
+				<button class="button button_icerik" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"><img src="/images/pen.png" width="15px" height="15px"> Yorum Yap</button>
+			</div>
+			<div id="id01" class="modal" action="/login" method="GET">
+				<form class="modal-content animate" action="/<%=user%>/<%=id%>/new_comment" method="POST">
+					<div class="imgcontainer">
+						<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+					</div>
+					<div class="container">
+						<input type="hidden" name="p_id" value="<%=posts.length%>">
+						<input type="hidden" name="id" value="<%=user%>">
+						<input type="hidden" name="which" value="<%=id%>">
+						<input type="hidden" name="type" value="comment">
+						<% var d = new Date();
+							var today = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+							var time = d.getHours() + ":" + d.getMinutes();
+						%>
+						<input type="hidden" name="date" value="<%=today%>">
+						<input type="hidden" name="hour" value="<%=time%>">
+						
+						<label for="photo">Fotoğraf:</label>
+						<input type="file" name="photo">
+						
+						<label for="video">Video linki:</label>
+						<input type="text" name="video">
+						
+						<label for="content">Yorum:</label>
+						<textarea name="content" rows="10" cols="30"></textarea>
+						
+						<div class="clearfix, mid">
+							<button class="button button_icerik"><img src="/images/pen.png" width="15px" height="15px"> Yorum yap</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+			<% for (var i = posts.length - 1; i >= 0; i--) { %>
+				<%if (posts[i].which == id && posts[i].type == "comment") { %>
+					<div class="post">
+						<div class="post_resim">
+						  <img src="<%=users[posts[i].id].picture%>" style="border-radius: 50%;" width="80" height="80">
+						</div>
+						<div class="post_metin">
+						  <h5><a href="/<%=user%>/<%=posts[i].id%>/posts"><%=users[posts[i].id].name%> <%=users[posts[i].id].surname%></a><br>
+						  <%=posts[i].date%>, <%=posts[i].hour%></h5>
+						</div>
+						<p><%=posts[i].content%></p>
+						<div class="col-md-4">
+						  <div class="thumbnail">
+							<a href="<%=posts[i].photo%>" target="_blank">
+							<img src="<%=posts[i].photo%>" style="width:100%" >
+								<div class="caption">
+								</div>
+							</a>
+						  </div>
+						</div>
+						<%if (posts[i].video != "") { %>
+							<iframe src="<%=posts[i].video%>" width="100%" height="400px" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<% } %>
+						<%if (posts[i].type != "like") { %>						
+							<form action="/<%=user%>/<%=posts[i].p_id%>/post_like" method="POST">
+								<input type="hidden" name="p_id" value="<%=posts.length%>">
+								<input type="hidden" name="id" value="<%=user%>">
+								<input type="hidden" name="which" value="<%=posts[i].p_id%>">
+								<input type="hidden" name="type" value="like">
+								<input type="hidden" name="photo" value="">
+								<input type="hidden" name="video" value="">
+								<input type="hidden" name="content" value="">
+								<% var d = new Date();
+									var today = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+									var time = d.getHours() + ":" + d.getMinutes();
+								%>
+								<input type="hidden" name="date" value="<%=today%>">
+								<input type="hidden" name="hour" value="<%=time%>">
+								<button type="submit" class="button button_icerik"><img src="/images/kalp.png" width="15px" height="15px"> Beğen</button>
+							</form>
+						<% } %>
+						<button class="button button_icerik" onclick="document.getElementById('<%=i%>').style.display='block'" style="width:auto;"><img src="/images/pen.png" width="15px" height="15px"> Cevap Yaz</button>
+						<div id="<%=i%>" class="modal" action="/login" method="GET">
+						<form class="modal-content animate" action="/<%=user%>/<%=id%>/new_comment" method="POST">
+							<div class="imgcontainer">
+								<span onclick="document.getElementById('<%=i%>').style.display='none'" class="close" title="Close Modal">&times;</span>
+							</div>
+							<div class="container">
+								<input type="hidden" name="p_id" value="<%=posts.length%>">
+								<input type="hidden" name="id" value="<%=user%>">
+								<input type="hidden" name="which" value="<%=posts[i].p_id%>">
+								<input type="hidden" name="type" value="answer">
+								<% var d = new Date();
+									var today = d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+									var time = d.getHours() + ":" + d.getMinutes();
+								%>
+								<input type="hidden" name="date" value="<%=today%>">
+								<input type="hidden" name="hour" value="<%=time%>">
+								<input type="file" name="photo" value="">
+								<input type="file" name="video" value="">
+								
+								<label for="content">Cevap:</label>
+								<textarea name="content" rows="10" cols="30"></textarea>
+								
+								<div class="clearfix, mid">
+									<button class="button button_icerik"><img src="/images/pen.png" width="15px" height="15px">Cevap yaz</button>
+								</div>
+								
+							</div>
+						</form>
+						</div>
+						<% for (var j = posts.length - 1; j >= 0; j--) { %>
+							<%if (posts[j].which == posts[i].p_id && posts[j].type == "answer") { %>
+							<div class = "comment">
+								<img src="<%=users[posts[j].id].picture%>" style="border-radius: 50%;" width="80" height="80">
+								<p><b><a href="/<%=user%>/<%=users[posts[j].id].id%>/posts"><%=users[posts[j].id].name%> <%=users[posts[j].id].surname%>:</a></b> <%=posts[j].content%></p>
+								<h6> <%=posts[j].date%>, <%=posts[j].hour%> <h6>
+							</div>
+						  <% } %>
+					   <% } %>
+				     </div>
+				  <% } %>
+			<% } %>
+			<div style="clear: both"></div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Türkiyeyi Keşfet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-9">
+    <link rel="shortcut icon" href="/images/logo_icon.png">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+	<script src="//geodata.solutions/includes/countrystatecity.js"></script>
+</head>
+
+<body>
+	<div class="menu">
+		<div class="header">
+			<img src = "/images/logo.png" width="250" height="80">
+			<div class="header-right">
+			</div>
+		</div>
+		<div class="mid">
+		<label for="password" >Şifre:</label>
+		<input type="password" id="psw">
+		
+		<button class="button button_icerik" onclick="f()" style="width:auto;">Tamam</button>
+		<div id="id01" class="modal" action="/add" method="POST">
+		
+		<form class="modal-content animate" action="/add" method="POST">
+			<div class="imgcontainer">
+				<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+			</div>
+			<div class="container">
+				<input type="hidden" name="id" value="<%=places.length%>" required>
+
+				<label for="name">Ad:</label>
+				<input type="text" name="name" value="" required>
+				
+				<label for="city">Şehir:</label>
+				<input type="text" name="city" list="city">
+				<datalist name="city" id="city" required>
+					<option value="İstanbul">
+					<option value="Ankara">
+					<option value="İzmir">
+					<option value="Bolu">
+					<option value="Bursa">
+					<option value="Çanakkale">
+					<option value="Eskişehir">
+					<option value="Gümüşhane">
+					<option value="Tekirdağ">
+				</datalist>
+				
+				<label for="picture">Resim:</label>
+				<input type="file" name="picture" value="">
+		  
+				<label for="about">Duvar yazısı:</label>
+				<textarea name="about" rows="10" cols="30"></textarea>
+
+				<label for="map">Harita:</label>
+				<textarea name="map" rows="10" cols="30"></textarea>
+				
+				<label for="transportation">Ulaşım:</label>
+				<textarea name="transportation" rows="10" cols="30"></textarea>
+							
+				<div class="clearfix, mid">
+					<button type="submit" class="signupbtn">Ekle</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+	function f(){
+		var x = document.getElementById("psw").value;
+		if (x == "abc"){
+			document.getElementById("id01").style.display="block";
+		}
+	};
+</script>
+</body>
+</html>

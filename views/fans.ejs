@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Türkiyeyi Keşfet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-9">
+    <link rel="shortcut icon" href="/images/logo_icon.png">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+</head>
+
+<body>
+	<div class="menu">
+		<div class="header">
+			<img src = "/images/logo.png" width="250" height="80">
+			<div class="header-right">
+				<button class="button button_menu" onclick="window.location.href='/<%=users[user].id%>/search'"><img src="/images/find.png" width="15px" height="15px"> Ara</button>
+				<button class="button button_menu" onclick="window.location.href='/<%=users[user].id%>/page'"><img src="/images/page.png" width="15px" height="15px"> Sayfam</button>
+				<button class="button button_menu" onclick="window.location.href='/<%=users[user].id%>/settings'"><img src="/images/ayarlar.png" width="15px" height="15px"> Ayarlar</button>
+				<button class="button button_menu" onclick="window.location.href='/'"><img src="/images/x.png" width="15px" height="15px"> Çıkış</button>
+			</div>
+		</div>
+	</div>
+	<div class="tual">
+		<div class="sol_menu">
+			<img src="<%=places[id].picture%>" style="border-radius: 50%;" width="240" height="240">
+			<h2><%=places[id].name%></h2>
+			<form action="/<%=user%>/<%=id%>/like" method="POST">
+				<input type="hidden" name="user" value="<%=user%>">
+				<input type="hidden" name="place" value="<%=id%>">
+				<button type="submit" class="button button_icerik"><img src="/images/kalp.png" width="15px" height="15px"> Beğen</button>
+			</form>
+			<ul id="myMenu">
+				<li><a href="/<%=user%>/<%=places[id].id%>/comments">Yorumlar</a></li>
+				<li><a href="/<%=user%>/<%=places[id].id%>/information">Bilgiler</a></li>
+				<li><a href="/<%=user%>/<%=places[id].id%>/photos">Fotoğraflar</a></li>
+				<li><a href="/<%=user%>/<%=places[id].id%>/videos">Videolar</a></li>
+				<li><a href="/<%=user%>/<%=places[id].id%>/fans"><b style="color: red">Beğenenler</b></a></li>
+			</ul>
+		</div>
+    <div class="sag_icerik" style="font-size:125%; font-family:arial;">
+		<div class="row, mid">
+			<% for (var i = fans.length-1; i >= 0; i--) { %>
+				<% if (fans[i].place == id) { %>
+				<div class="column">
+					<div class="card">
+						<img src="<%=users[fans[i].user].picture%>" width="300" height="300">
+						<div class="container">
+							<h2><a href="/<%=user%>/<%=users[fans[i].user].id%>/posts"><%=users[fans[i].user].name%> <%=users[fans[i].user].surname%></a></h2>
+							<p class="title"><%=users[fans[i].user].country%></p>
+							<p><%=users[fans[i].user].city%></p>
+							<form action="/<%=user%>/<%=fans[i].user%>/follow" method="POST">
+								<input type="hidden" name="id" value="<%=user%>">
+								<input type="hidden" name="follow_id" value="<%=fans[i].user%>">
+								<button type="submit" class="button button_icerik"><img src="/images/friend.png" width="15px" height="15px"> Takip et</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<% } %>
+			<% } %>
+		</div>
+		<div style="clear: both"></div>
+	</div>
+</div>
+</body>
+</html>

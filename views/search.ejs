@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Türkiyeyi Keşfet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-9">
+    <link rel="shortcut icon" href="/images/logo_icon.png">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+	<script src="//geodata.solutions/includes/countrystatecity.js"></script>
+</head>
+
+<body>
+	<div class="menu">
+		<div class="header">
+			<img src = "/images/logo.png" width="250" height="80">
+			<div class="header-right">
+				<button class="button button_icerik" onclick="window.location.href='/<%=users[user].id%>/search'"><img src="/images/find.png" width="15px" height="15px"> Ara</button>
+				<button class="button button_menu" onclick="window.location.href='/<%=users[user].id%>/page'"><img src="/images/page.png" width="15px" height="15px"> Sayfam</button>
+				<button class="button button_menu" onclick="window.location.href='/<%=users[user].id%>/settings'"><img src="/images/ayarlar.png" width="15px" height="15px"> Ayarlar</button>
+				<button class="button button_menu" onclick="window.location.href='/'"><img src="/images/x.png" width="15px" height="15px"> Çıkış</button>
+			</div>
+		</div>
+	<div class="kisi_ara_menu">
+		<h2 style="font-family:century gothic;">Kişiler</h2>
+		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Kişi ara">
+		<ul id="myMenu">
+		<% for (var i = 0; i < users.length; i++) { %>
+			<li><a href="/<%=user%>/<%=users[i].id%>/posts"><img src="<%=users[i].picture%>" width="30" height="30"> <%=users[i].name%> <%=users[i].surname%> </a></li>
+		<% } %>
+		</ul>
+	</div>
+	<div  class="grup_ara_menu">
+		<h2 style="font-family:century gothic;">Yerler</h2>
+		<button class="button button_icerik" onclick="rastgele()"><img src="/images/find.png" width="15px" height="15px"> Rastgele bir yer </button>
+		<input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Yer ara">
+		<ul id="myMenu2">
+		<% for (var i = 0; i < places.length; i++) { %>
+			<li><a href="/<%=user%>/<%=places[i].id%>/comments"><img src="<%=places[i].picture%>" width="30" height="30"> <%=places[i].name%></a></li>
+		<% } %>
+		</ul>
+	</div>
+	<div style="clear: both"></div>
+<script>
+	function rastgele (){
+		window.location.href="/<%=user%>/<%=places[Math.floor(Math.random()*places.length)].id%>/comments";
+	};
+	function myFunction() {
+		var input, filter, ul, li, a, i, txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		ul = document.getElementById("myMenu");
+		li = ul.getElementsByTagName("li");
+		for (i = 0; i < li.length; i++) {
+			a = li[i].getElementsByTagName("a")[0];
+			txtValue = a.textContent || a.innerText;
+			if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				li[i].style.display = "";
+			} else {
+				li[i].style.display = "none";
+			}
+		}
+	}
+	function myFunction2() {
+		var input, filter, ul, li, a, i, txtValue;
+		input = document.getElementById("myInput2");
+		filter = input.value.toUpperCase();
+		ul = document.getElementById("myMenu2");
+		li = ul.getElementsByTagName("li");
+		for (i = 0; i < li.length; i++) {
+			a = li[i].getElementsByTagName("a")[0];
+			txtValue = a.textContent || a.innerText;
+			if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				li[i].style.display = "";
+			} else {
+				li[i].style.display = "none";
+			}
+		}
+	}
+</script>
+</body>
+</html>

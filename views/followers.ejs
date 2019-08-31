@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Türkiyeyi Keşfet</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-9">
+    <link rel="shortcut icon" href="/images/logo_icon.png">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+</head>
+
+<body>
+	<div class="menu">
+		<div class="header">
+			<img src = "/images/logo.png" width="250" height="80">
+			<div class="header-right">
+				<button class="button button_menu" onclick="window.location.href='/<%=user%>/search'"><img src="/images/find.png" width="15px" height="15px"> Ara</button>
+				<button class="button button_menu" onclick="window.location.href='/<%=user%>/page'"><img src="/images/page.png" width="15px" height="15px"> Sayfam</button>
+				<button class="button button_menu" onclick="window.location.href='/<%=user%>/settings'"><img src="/images/ayarlar.png" width="15px" height="15px"> Ayarlar</button>
+				<button class="button button_menu" onclick="window.location.href='/'"><img src="/images/x.png" width="15px" height="15px"> Çıkış</button>
+			</div>
+		</div>
+	</div>
+	<div class="tual">
+		<div class="sol_menu">
+			<img src="<%=users[id].picture%>" style="border-radius: 50%;" width="240" height="240">
+			<h2><%=users[id].name%> <%=users[id].surname%></h2>
+			<% if (user != id) { %>
+				<form action="/<%=user%>/<%=id%>/follow" method="POST">
+					<input type="hidden" name="id" value="<%=user%>">
+					<input type="hidden" name="follow_id" value="<%=id%>">
+					<button type="submit" class="button button_icerik"><img src="/images/friend.png" width="15px" height="15px"> Takip Et</button>
+				</form>
+			<% } %>
+			<ul id="myMenu">
+				<li><a href="/<%=user%>/<%=users[id].id%>/posts">Paylaşımlar</a></li>
+				<li><a href="/<%=user%>/<%=users[id].id%>/about">Hakkında</a></li>
+				<li><a href="/<%=user%>/<%=users[id].id%>/followers"><b style="color: red">Takipçileri</b></a></li>
+				<li><a href="/<%=user%>/<%=users[id].id%>/following">Takip Ettikleri</a></li>
+				<li><a href="/<%=user%>/<%=users[id].id%>/likes">Beğendikleri</a></li>
+			</ul>
+		</div>
+		<div class="sag_icerik" style="font-size:125%; font-family:arial;">
+			<div class="row, mid">
+				<% for (var i = followers.length-1; i >= 0; i--) { %>
+					<% if (followers[i].follow_id == id) { %>
+						<div class="column">
+							<div class="card">
+								<img src="<%=users[followers[i].id].picture%>" width="300" height="300">
+								<div class="container">
+									<h2><a href="/<%=user%>/<%=users[followers[i].id].id%>/posts"><%=users[followers[i].id].name%> <%=users[followers[i].id].surname%></a></h2>
+									<p class="title"><%=users[followers[i].id].country%></p>
+									<p><%=users[followers[i].id].city%></p>
+									<form action="/<%=user%>/<%=followers[i].id%>/follow" method="POST">
+										<input type="hidden" name="id" value="<%=user%>">
+										<input type="hidden" name="follow_id" value="<%=followers[i].id%>">
+										<button type="submit" class="button button_icerik"><img src="/images/friend.png" width="15px" height="15px"> Takip et</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					<% } %>
+				<% } %>
+		</div>
+		<div style="clear: both"></div>
+	</div>
+</div>
+</body>
+</html>
